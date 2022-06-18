@@ -1,0 +1,221 @@
+swagger: "3.0"
+info:
+  title: "Stocks"
+  version: "1.0.0"
+  description: "Api to add/delete/update stocks."
+  contact:
+    name: "Vicknesh"
+    email: "vicknesh.moorthi@gmail.com"
+    url: "https://github.com/"
+basePath: "/api"
+tags:
+- name: "stocks"
+  description: "Manage Stocks"
+schemes:
+- "https"
+- "http"
+paths:
+  /stocks:
+    post:
+      tags:
+      - "stocks"
+      summary: "Add a stock to the inventory"
+      description: "Add a stock to the inventory"
+      operationId: "createStock"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "Stock"
+        description: "Request to add a stock to the inventory"
+        required: true
+        schema:
+          $ref: "#/definitions/StockRequest"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/StatusMessageResponse"
+        "400":
+          description: "The request could not be parsed."
+          schema:
+            $ref: "#/definitions/StatusMessageResponse"
+        "500":
+          description: "The service encountered an internal server error."
+          schema:
+            $ref: "#/definitions/StatusMessageResponse"      
+    get:
+      tags:
+      - "stocks"
+      summary: "Returns stocks from the inventories"
+      description: "Returns the list of stocks"
+      operationId: "getStocks"
+      produces:
+      - "application/json"
+      parameters: []
+      responses:
+        "200":
+          description: "The service request was processed successfully."
+          schema:
+            items:
+              $ref: "#/definitions/StockResponse"
+        "400":
+          description: "The request could not be parsed."
+          schema:
+            $ref: "#/definitions/StatusMessageResponse"
+        "500":
+          description: "The service encountered an internal server error."
+          schema:
+            $ref: "#/definitions/StatusMessageResponse"        
+  /stocks/{cusipiD}:
+    get:
+      tags:
+      - "stocks"
+      summary: "Find stock by cusipID"
+      description: "Returns a stock"
+      operationId: "getStockBycusipId"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "cusipiD"
+        in: "path"
+        description: "cusipId of the stock"
+        required: true
+        type: "string"
+      responses:
+        "200":
+          description: "The service request was processed successfully."
+          schema:
+            $ref: "#/definitions/StockResponse"
+        "400":
+          description: "The request could not be parsed."
+          schema:
+            $ref: "#/definitions/StatusMessageResponse"
+        "500":
+          description: "The service encountered an internal server error."
+          schema:
+            $ref: "#/definitions/StatusMessageResponse"
+    patch:
+      tags:
+      - "stocks"
+      summary: "Update stock by cusipID"
+      description: "Update a stock"
+      operationId: "updateStockBycusipId"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "cusipiD"
+        in: "path"
+        description: "cusipId of the stock"
+        required: true
+        type: "string"
+      - name: "Stock"
+        in: "body"
+        description: "Request to add a stock to the inventory"
+        required: true
+        schema:
+          $ref: "#/definitions/StockRequest"  
+      responses:
+        "200":
+          description: "The service request was processed successfully."
+          schema:
+            $ref: "#/definitions/StatusMessageResponse"
+        "400":
+          description: "The request could not be parsed."
+          schema:
+            $ref: "#/definitions/StatusMessageResponse"
+        "500":
+          description: "The service encountered an internal server error."
+          schema:
+            $ref: "#/definitions/StatusMessageResponse"  
+    delete:
+      tags:
+      - "stocks"
+      summary: "Delete a stock by cusipID"
+      description: "Delete a stock"
+      operationId: "deleteStockBycusipId"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "cusipiD"
+        in: "path"
+        description: "cusipId of the stock"
+        required: true
+        type: "string"
+      responses:
+        "200":
+          description: "The service request was processed successfully."
+          schema:
+            $ref: "#/definitions/StatusMessageResponse"
+        "400":
+          description: "The request could not be parsed."
+          schema:
+            $ref: "#/definitions/StatusMessageResponse"
+        "500":
+          description: "The service encountered an internal server error."
+          schema:
+            $ref: "#/definitions/StatusMessageResponse"        
+definitions:
+  StockRequest:
+    type: "object"
+    required:
+    - "cusipId"
+    properties:
+      cusipId:
+        description: "Unique identifier of stock"
+        type: "string"
+      name:
+        type: "string"
+        description: "Name of the stock"
+      ticker:
+        type: "string"
+        description: "Name of the stock"
+      currentPrice:
+        type: number
+        format: currency
+        description: "Price of the stock"  
+  StockResponse:
+    type: "object"
+    properties:
+      cusipId:
+        description: "Unique identifier of stock"
+        type: "string"
+      name:
+        type: "string"
+        description: "Name of the stock"
+      ticker:
+        type: "string"
+        description: "Name of the stock"
+      currentPrice:
+        type: number
+        format: currency
+        description: "Price of the stock"  
+      lastUpdatedDtTm:
+        type: string
+        description: "Last updated date and time of the stock"         
+  StatusMessageResponse:
+    type: "object"
+    properties:
+      statusMessages:
+        type: "array"
+        items:
+          $ref: "#/definitions/StatusMessage"
+        minItems: 1
+    required:
+      - statusMessages
+  StatusMessage:
+    type: "object"
+    properties:
+      type:
+        type: string
+        enum:
+          - INFORMATION
+          - WARNING
+          - ERROR
+          - SUCCESS
+      code:
+          type: "string"
+      message:
+          type: "string"
