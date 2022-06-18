@@ -47,12 +47,3 @@ swaggerSources {
         }
     }
 }
-
-// Configure compile task dependency and source
-compileJava.dependsOn swaggerSources.stock.code
-sourceSets.main.java.srcDir "${swaggerSources.stock.code.outputDir}/src/main/java"
-sourceSets.main.resources.srcDir "${swaggerSources.stock.code.outputDir}/src/main/resources"
-
-tasks.named('test') {
-	useJUnitPlatform()
-}
