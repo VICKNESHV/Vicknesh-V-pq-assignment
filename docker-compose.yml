@@ -2,10 +2,10 @@ version: "3"
 services:
   stock-service:
     image: stock-service
-    ports:
-      - "8080:8080"
     networks:
       - stock-mysql
+    ports:
+      - "8080:8080"  
     depends_on:
       - mysqldb
  
@@ -13,6 +13,8 @@ services:
     image: mysql:8
     networks:
       - stock-mysql
+    ports:
+      - "3306:3306"  
     environment:
       - MYSQL_ROOT_PASSWORD=root
       - MYSQL_DATABASE=bootdb  
