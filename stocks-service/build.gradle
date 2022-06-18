@@ -35,7 +35,6 @@ dependencies {
 	
 	implementation 'mysql:mysql-connector-java:8.0.29'
 }
-
 swaggerSources {
     stock {
         inputFile = file("/misc/resources/specification/stocks.yaml")
