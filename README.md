@@ -1,4 +1,4 @@
-# springboot-crud-demo
+# stock-service
 
 Spring Boot CRUD demo is demonstrating how to implement simple CRUD operations with a `Product` entity.
 
