@@ -14,7 +14,7 @@ import javax.validation.constraints.*;
  * StatusMessage
  */
 @Validated
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2022-06-17T22:47:13.145+05:30")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2022-06-19T03:16:44.540+05:30")
 
 
 public class StatusMessage   {
